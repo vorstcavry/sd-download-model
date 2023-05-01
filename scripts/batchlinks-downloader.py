@@ -1985,15 +1985,10 @@ def on_ui_tabs():
                 datatype=["str", "str"],
                 interactive=False,
             )
-                gr.Markdown(
+        gr.Markdown(
         f"""
         <center><p style="font-size: 12px; color: gray">Remake ❤️ by <a href="https://github.com/vorstcavry">vorstcavry</a></p></center>
         """)
-        gr.Markdown(
-        f"""
-        <center><p style="font-size: 12px; color: gray">original source❤️ by <a href="https://github.com/etherealxx">etherealxx</a></p></center>
-        """)
-)
         helphider.change(hidehelp, helphider, outputs=[introduction, knowmore])
         uistretcher.change(stretchui, uistretcher, outputs=[boxtohide, rightlist, bottomlist])
         #batchlinks.load(debug, output=debug_txt, every=1)
