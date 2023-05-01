@@ -1,0 +1,113 @@
+v3.1.1b
+(^current version^)
+
+Release notes:
+
+## v3.1.1b
+- Hotfix: Fixed CivitAI link refuses to be downloaded properly. Seems like CivitAI changes its API.
+- Fixed several bugs on Windows, especially SDless
+
+## v3.1.1a
+- Hotfix: Fixed CivitAI 'model type chooser' bug and fixed `@extract` bug on colab
+
+## v3.1.1
+- Added some fix and messages in case CivitAI website is down
+- Added message when user pressed "Download All!" but the textbox is empty
+- Fixed bug where Lycoris folder always shows on downloaded files the first time user download something
+
+## v3.1.0a
+- Hotfix: Indented block on line 1497 fix
+
+## v3.1.0
+- New hashtag: `#altmodel`, when you use `--ckptdir` argument on `launch.py` line, this hashtag will points to that directory. Otherwise, it'll point to the same directory as `#model`
+- New hashtag: `#lycoris`, change current save directory to _/content/stable-diffusion-webui/extensions/sd-webui-additional-networks/models/lora/lycoris_<br/>(Side note: _Lycoris/Locon/Loha_ will works just fine if you use `#addnetlora` instead, as long as you have both [addnet extension](https://github.com/kohya-ss/sd-webui-additional-networks) and [locon extension](https://github.com/KohakuBlueleaf/a1111-sd-webui-locon) installed)
+- New hashtag: `#upscaler`, change current save directory to _/content/stable-diffusion-webui/models/ESRGAN_ (This was added few commits ago, but i forgot to write it on the release notes)
+
+Fixes:
+- Fixed bug when installing wget/aria2 on Windows
+- Fixed bug where custom paths doesn't put CivitAi download (Model Path method) when custom hashtag is used
+- Ongoing downloads will correctly stops when Cancel button is pressed on Windows
+- CivitAi (Model Path method) now will not download training dataset by accident
+
+## v3.0.2
+- Hotfix: removed a comment that messed up the non queue mode. Now the extension works again without `--gradio-queue`.
+
+## v3.0.1
+- Hotfix: using `urllib.request` instead of `curl -sI` to get the model name on CivitAI direct link method, since it's more reliable (and the curl method always fails somehow). The `requests` method is returned as a fallback.
+
+## v3.0.0
+- Added `@extract` syntax
+- Supports for custom hashtags with `@new` syntax
+- (Almost) Full Windows support
+- Auto-download config file if available when downloading from CivitAI (SD 2.0+)
+- Auto-renaming for downloading ckpt/safetensors and pruned model from CivitAI using direct link method
+- CivitAI direct link now use `curl` to get the filename, and use the chosen download method (from the four) to download. Huge download speed boost. `requests` is no longer needed.
+- Supports download from Anonfiles, Dropbox, Google Drive, Mediafire, Pixeldrain
+- Supports download from Github (raw and release files)
+- Supports for SDless mode (read more [here](https://github.com/etherealxx/batchlinks-webui#sdless-mode))
+- UI overhaul:
+  - Now there's a table that shows where does the hashtags points into
+  - Option to stretch the UI, if your monitor is small, or using colab on mobile
+  - Option to hide help text
+  - Option to choose preferred CivitAI models. This will works if you download the model via model page link (https://civitai.com/models/)
+  - Upload txt now use a little button instead of covering half of the screen
+
+Fixes:
+- CivitAI `model page link` no longer randomly download the first model on the json list.
+- Most of Windows bugs
+- Renaming problem when using CivitAI model page link method
+- Warning message when CivitAI download isn't possible (server down)
+
+## v2.1.2
+- CivitAI direct link now use curl to get the filename, and use the chosen download method to download. Requests is no longer needed.
+
+## v2.1.1
+- Partial Windows support is back
+
+Changes:
+- wget disabled on windows currently, until it fixed
+
+Fixes:
+- gdown & curl bug fixed
+- utf-8 as default encoding for queue checker (fix bug in Windows)
+
+## v2.1.0
+Features:
+- Supports renaming downloaded file with `>` (for example: `https://files.catbox.moe/uarze8.safetensors > neurosama.safetensors`)
+- Supports extension usage without `--gradio-queue` (ported from [onedotsix](https://github.com/etherealxx/batchlinks-webui/tree/onedotsix))
+- Supports running shell command from the UI with `!` (for example: type `!pip freeze`, then hit the `Download all!` button and see the colab console)
+- Progress bar for `--gradio-queue`
+
+Changes:
+- `aria2` as *the only* download method when using without `--gradio-queue`
+- Download session will be cut every 80 seconds on when using without `--gradio-queue` (just like [onedotsix](https://github.com/etherealxx/batchlinks-webui/tree/onedotsix))
+- _Debug stopwatch (decorator)_ won't run automatically when `globaldebug = True`, must be uncommented manually (it disrupt the progress bar)
+- Dropped support for webui based on Gradio 3.9 (update your installation, or use [onedotsix](https://github.com/etherealxx/batchlinks-webui/tree/onedotsix) instead)
+- UI tweak (Smaller font size)
+
+## v2.0.0
+Features:
+- `aria2` as download method.
+- Cancel button for cancelling download process (`--gradio-queue` required)
+- Debug snapshot.<br/>
+When `global_debug = True`, the moment this extension launch, it saves the current state of the webui on various location (into `snapshot.txt`), and when you type `#debugresetdownloads` on the textbox, it will compare the current state and the last saved state, and removes every new file/folder. This will be useful for debugging and testing.
+- Debug every download method.<br/>
+When `global_debug = True` and you type `#debugevery method` on the textbox, every link that has 4 different method of download (Huggingface etc.) will be downloaded with every method, regardless of the radio button choice. The result is 4 file being downloaded.
+- Detection if a CivitAI links no longer exist
+- New hashtags: `#textualinversion`, `#ti`, `#aestheticembedding`, `#aestheticembed`, `#controlnet`, and `#cnet`
+- Toggle logging on/off
+- `shlex.quote` to properly quote links (Thanks **[@rti7743](https://github.com/rti7743)**!)
+- Supports cloning webui extensions
+- Supports download from CivitAI model links (Thanks **[@rti7743](https://github.com/rti7743)**!)
+- Supports download from Github (repository and raw files)
+- Supports for aesthetic gradients, controlnet model, and extensions path.
+- UI font scaled down
+- Uses `subprocess.Popen` instead of `os.system`
+
+
+Older releases:
+
+- commit "alpha" is v0.1.0 (09b1d81806e5bfc4d1783ccf644359fabc372fb7)
+- commit "Civit support, i hope it works." is v0.2.0 (2420ea4dd670ec71481a2ed43ff22c7c1a959543)
+- commit "🪲Bug fix and 🖼️stuff" is v0.2.1 (c7a91b6e14ca6f35438e29ab7ad3d2e00d62c99b)
+- commit "Merge pull request #1 from etherealxx/gradioevery" is v1.0.0 (a89e50fdfb5008f703750cf0e7878fc6c25f9219)
