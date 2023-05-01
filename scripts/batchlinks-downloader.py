@@ -1,4 +1,3 @@
-#github.com/etherealxx
 #remake https://github.com/vorstcavry
 import os
 import time
@@ -24,13 +23,13 @@ except ImportError: #sdless
     if platform.system() == "Windows":
         userprofile = os.environ['USERPROFILE']
         downloadpath = os.path.join(userprofile, "Downloads")
-        script_path = os.path.join(downloadpath, "stable-diffusion-$masbro")
+        script_path = os.path.join(downloadpath, "cagliostro-colab-ui")
     elif platform.system() == "Darwin":
         userhome = os.environ['HOME']
         downloadpath = os.path.join(userhome, "Downloads")
-        script_path = os.path.join(downloadpath, "stable-diffusion-$masbro")
+        script_path = os.path.join(downloadpath, "cagliostro-colab-ui")
     else:
-        script_path = '/content/stable-diffusion-$masbro'
+        script_path = '/content/cagliostro-colab-ui'
     models_path = os.path.join(script_path, 'models')
     gradio_queue = True
     ckpt_dir = None
@@ -52,7 +51,7 @@ with open(version_dir, 'r', encoding='utf-8') as file:
 currentversion = curverall[0].strip()
 
 try:
-    versionurl = "https://raw.githubusercontent.com/etherealxx/batchlinks-webui/main/version.txt"
+    versionurl = "https://raw.githubusercontent.com/vorstcavry/sd-download-model/main/version.txt"
     versionresp = requests.get(versionurl)
     version_lines = versionresp.text.splitlines()
     latestversion = version_lines[0].strip()
@@ -192,11 +191,6 @@ def stopwatch(func): #unused
         return result
     return wrapper
 
-#debuggingpurpose{
-    #Hello debuggers! This will track every files when the extension is launched, and
-    #you can remove every downloaded files after with hashtag '@debugresetdownloads', for debugging purposes on colab
-    #(Note: You need to fill the textbox with only a single line of @debugresetdownloads and nothing more)
-    #There's also another feature, '#debugeverymethod', which will download a single link with all four possible methods available.
 import shutil
 snapshot = []
 paths_to_scan = []
@@ -1872,33 +1866,24 @@ def buildarrayofhashtags(rightorbottom):
             print(str(e))
     return hashtagandpath
 
-titletext = f"""<h3 style="display: inline-block; font-size: 20px;">⬇️ Batchlinks Downloader ({currentversion}) {latestversiontext}</h3>"""
+titletext = f"""<h3 style="display: inline-block; font-size: 20px;">Alternatif Download </h3>"""
 introductiontext = f"""
 {titletext}
-<h5 style="display: inline-block; font-size: 14px;"><a href="https://github.com/etherealxx/batchlinks-webui#latest-release-{currentverforlink}">(what's new?)</a></h5>
-<p style="font-size: 14px;;">This tool will read the textbox and download every links from top to bottom one by one<br/>
-Put your links down below. Supported link: Huggingface, CivitAI, MEGA, Discord, Github, Catbox, Google Drive, Pixeldrain, Mediafire, Anonfiles, Dropbox<br/>
-Use hashtag to separate downloaded items based on their download location<br/>
-Valid hashtags: <code>#embed</code>, <code>#model</code>,  <code>#hypernet</code>, <code>#lora</code>, <code>#vae</code>, <code>#addnetlora</code>, etc.<br/>
-(For colab that uses sd-webui-additional-networks extension to load LoRA, use <code>#addnetlora</code> instead)<br/>
-Use double hashtag after links for comment</p>
+<p style="font-size: 14px;;">ekstension ini akan membaca kotak teks dan mengunduh setiap tautan dari atas ke bawah satu per satu<br/>
+Letakan Link download dibawah. Support link: Huggingface, CivitAI, MEGA, Discord, Github, Catbox, Google Drive, Pixeldrain, Mediafire, Anonfiles, Dropbox<br/>
+Gunakan hashtag untuk memisahkan item yang diunduh berdasarkan lokasi pengunduhannya dan berdasarkan type filenya<br/>
+Hastag yang digunakan: <code>#embed</code>, <code>#model</code>,  <code>#hypernet</code>, <code>#lora</code>, <code>#vae</code>, <code>#addnetlora</code>, etc.<br/>
+(Untuk colab jika mengalami error bisa menggunakan Hastag <code>#addnetlora</code> untuk menginginstall lora)<br/>
+Gunakan tagar ganda setelah tautan untuk komentar</p>
 """
-knowmoretext = f"""
-<p style="font-size: 14px;">Click these links for more:<br/>
-<a href="https://github.com/etherealxx/batchlinks-webui">Readme Page</a><br/>
-<a href="https://github.com/etherealxx/batchlinks-webui#example">Example</a><br/>
-<a href="https://github.com/etherealxx/batchlinks-webui#syntax">Syntax</a><br/>
-<a href="https://github.com/etherealxx/batchlinks-webui#valid-hashtags">Valid Hashtags</a><br/>
-<a href="https://github.com/etherealxx/batchlinks-webui/blob/main/howtogetthedirectlinks.md">Here's how you can get the direct links</a><br/>
-<a href="https://github.com/etherealxx/batchlinks-webui/issues">Report Bug</a></p>
-"""
+
 testboxplaceholder = f"""#model
-<your model link here>
+<Letakan Link download disini>
 #vae
-<your vae link here>
+<Letakan Link download disini>
 #lora
-<your lora link here>
-##this is a comment, and these text is just an example
+<Letakan Link download disini>
+##ini adalah komentar, dan teks ini hanyalah sebuah contoh
 """
 
 def on_ui_tabs():     
@@ -1971,9 +1956,7 @@ def on_ui_tabs():
                     with gr.Row():
                         gr.Markdown(
                         f"""
-                        <p style="font-size: 14px; text-align: center; line-height: 90%;;"><br/>After clicking the Download All button, it's recommended to inspect the
-                        colab console, as every information about the download progress is there.</p>
-                        """)
+                        <p style="font-size: 14px; text-align: center; line-height: 90%;;"><br/>Setelah mengeklik tombol Unduh Semua, disarankan untuk memeriksa colab, karena semua informasi tentang kemajuan pengunduhan ada di sana..</p>""")
 
                 if gradiostate == False:
                     btn_resume.click(fillbox, None, outputs=[command, out_text, btn_resume])
@@ -2002,14 +1985,15 @@ def on_ui_tabs():
                 datatype=["str", "str"],
                 interactive=False,
             )
-        gr.Markdown(
-        f"""
-        <center><p style="font-size: 12px; color: gray">Made with ❤️ by <a href="https://github.com/etherealxx">etherealxx</a></p></center>
-        """)
-        gr.Markdown(
+                gr.Markdown(
         f"""
         <center><p style="font-size: 12px; color: gray">Remake ❤️ by <a href="https://github.com/vorstcavry">vorstcavry</a></p></center>
         """)
+        gr.Markdown(
+        f"""
+        <center><p style="font-size: 12px; color: gray">original source❤️ by <a href="https://github.com/etherealxx">etherealxx</a></p></center>
+        """)
+)
         helphider.change(hidehelp, helphider, outputs=[introduction, knowmore])
         uistretcher.change(stretchui, uistretcher, outputs=[boxtohide, rightlist, bottomlist])
         #batchlinks.load(debug, output=debug_txt, every=1)
